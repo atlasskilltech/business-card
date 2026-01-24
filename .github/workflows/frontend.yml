@@ -36,7 +36,7 @@ jobs:
           username: ubuntu
           key: ${{ secrets.EC2_SSH_KEY }}
           source: "dist/*"
-          target: "/home/ubuntu/business-card-main/dist"
+          target: "/home/ubuntu/business-card/dist"
           strip_components: 1
 
       # 6. Fix permissions (safe for ubuntu user)
@@ -47,6 +47,6 @@ jobs:
           username: ubuntu
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
-            mkdir -p /home/ubuntu/business-card-main/dist
-            chown -R ubuntu:ubuntu /home/ubuntu/business-card-main/dist
-            chmod -R 755 /home/ubuntu/business-card-main/dist
+            mkdir -p /home/ubuntu/business-card/dist
+            chown -R ubuntu:ubuntu /home/ubuntu/business-card/dist
+            chmod -R 755 /home/ubuntu/business-card/dist

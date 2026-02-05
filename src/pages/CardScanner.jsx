@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useRef } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { FiUpload, FiCamera, FiCheck, FiEdit2 } from 'react-icons/fi';
 import { toast } from 'react-toastify';
@@ -11,11 +11,9 @@ const CardScanner = () => {
   const [scannedCard, setScannedCard] = useState(null);
   const [preview, setPreview] = useState(null);
   const [editing, setEditing] = useState(false);
+  const cameraInputRef = useRef(null);
 
-  const onDrop = useCallback(async (acceptedFiles) => {
-    if (acceptedFiles.length === 0) return;
-
-    const file = acceptedFiles[0];
+  const processImage = async (file) => {
     setPreview(URL.createObjectURL(file));
     setScanning(true);
 
@@ -31,10 +29,15 @@ const CardScanner = () => {
       }
     } catch (error) {
       console.error('Scan error:', error);
-      toast.error('Failed to scan card. Please try again.');
+      toast.error(error.response?.data?.message || 'Failed to scan card. Please try again.');
     } finally {
       setScanning(false);
     }
+  };
+
+  const onDrop = useCallback(async (acceptedFiles) => {
+    if (acceptedFiles.length === 0) return;
+    await processImage(acceptedFiles[0]);
   }, []);
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
@@ -43,8 +46,17 @@ const CardScanner = () => {
       'image/*': ['.jpeg', '.jpg', '.png', '.webp']
     },
     maxSize: 10485760, // 10MB
-    multiple: false
+    multiple: false,
+    noClick: false, // Allow click
+    noKeyboard: false
   });
+
+  const handleCameraCapture = async (event) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      await processImage(file);
+    }
+  };
 
   const handleSave = async (updatedData) => {
     try {
@@ -81,7 +93,7 @@ const CardScanner = () => {
       <div className="mb-8">
         <h1 className="text-3xl font-bold text-gray-900">Scan Business Card</h1>
         <p className="text-gray-600 mt-1">
-          Upload a business card image to extract contact information automatically
+          Upload a business card image or take a photo to extract contact information automatically
         </p>
       </div>
 
@@ -116,16 +128,46 @@ const CardScanner = () => {
                   {isDragActive ? 'Drop the image here' : 'Drag & drop a business card'}
                 </h3>
                 <p className="text-gray-600 mb-4">or click to browse</p>
-                <p className="text-sm text-gray-500">
+                <p className="text-sm text-gray-500 mb-4">
                   Supports: JPG, PNG, WEBP (Max 10MB)
                 </p>
+                
+                {/* Camera Button for Mobile */}
+                <div className="flex items-center justify-center space-x-4 pt-4">
+                  <div className="text-gray-400">OR</div>
+                </div>
               </>
             )}
           </div>
 
+          {/* Camera Capture Button */}
+          {!scanning && !preview && (
+            <div className="text-center">
+              <input
+                ref={cameraInputRef}
+                type="file"
+                accept="image/*"
+                capture="environment"
+                onChange={handleCameraCapture}
+                className="hidden"
+                id="camera-input"
+              />
+              <label
+                htmlFor="camera-input"
+                className="inline-flex items-center space-x-2 px-8 py-4 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors cursor-pointer shadow-lg"
+              >
+                <FiCamera className="w-6 h-6" />
+                <span className="text-lg font-medium">Take Photo with Camera</span>
+              </label>
+              <p className="text-sm text-gray-500 mt-3">
+                📱 On mobile: Opens your camera directly
+              </p>
+            </div>
+          )}
+
           {/* Features */}
           <div className="bg-primary-50 rounded-lg p-6">
-            <h3 className="font-semibold text-gray-900 mb-4">What we extract:</h3>
+            <h3 className="font-semibold text-gray-900 mb-4">✨ What we extract:</h3>
             <div className="grid grid-cols-2 gap-3">
               {['Name', 'Email', 'Phone', 'Company', 'Job Title', 'Website', 'Address'].map((field) => (
                 <div key={field} className="flex items-center space-x-2 text-sm text-gray-700">
@@ -134,6 +176,18 @@ const CardScanner = () => {
                 </div>
               ))}
             </div>
+          </div>
+
+          {/* Tips for Mobile Users */}
+          <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+            <h4 className="font-semibold text-blue-900 mb-2">📸 Tips for Best Results:</h4>
+            <ul className="text-sm text-blue-800 space-y-1">
+              <li>• Use good lighting (avoid shadows)</li>
+              <li>• Keep card flat and fully visible</li>
+              <li>• Ensure text is clear and not blurry</li>
+              <li>• Fill the frame with the card</li>
+              <li>• Avoid reflections if card is glossy</li>
+            </ul>
           </div>
         </div>
       ) : (
@@ -206,10 +260,10 @@ const CardScanner = () => {
           </div>
 
           {/* Actions */}
-          <div className="flex items-center justify-between">
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
             <button
               onClick={handleReset}
-              className="px-6 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors"
+              className="w-full sm:w-auto px-6 py-3 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors"
             >
               Scan Another Card
             </button>
@@ -224,9 +278,9 @@ const CardScanner = () => {
                   toast.error('Failed to sync card');
                 }
               }}
-              className="flex items-center space-x-2 px-6 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors"
+              className="w-full sm:w-auto flex items-center justify-center space-x-2 px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors shadow-lg"
             >
-              <FiCamera />
+              <FiCheck className="w-5 h-5" />
               <span>Sync to Google Contacts</span>
             </button>
           </div>

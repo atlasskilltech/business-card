@@ -41,7 +41,7 @@ const CardItem = ({ card, onUpdate, onDelete }) => {
       <div className="flex items-start justify-between mb-3 sm:mb-4 gap-3">
         <div className="flex items-start space-x-3 sm:space-x-4 min-w-0 flex-1">
           
-          <div className="min-w-0 flex-1">
+          <div className="min-w-0 flex-1 mt-5">
             <h3 className="text-base sm:text-lg font-semibold text-gray-900 truncate">
               {card.name || 'Unknown'}
             </h3>

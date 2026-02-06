@@ -30,32 +30,32 @@ const Login = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-primary-50 to-primary-100 flex items-center justify-center p-4">
       <div className="max-w-md w-full">
-        <div className="bg-white rounded-2xl shadow-xl p-8">
+        <div className="bg-white rounded-2xl shadow-xl p-6 sm:p-8">
           {/* Logo/Header */}
-          <div className="text-center mb-8">
-            <div className="inline-flex items-center justify-center w-16 h-16 bg-primary-100 rounded-full mb-4">
-              <FiMail className="w-8 h-8 text-primary-600" />
+          <div className="text-center mb-6 sm:mb-8">
+            <div className="inline-flex items-center justify-center w-14 h-14 sm:w-16 sm:h-16 bg-primary-100 rounded-full mb-3 sm:mb-4">
+              <FiMail className="w-7 h-7 sm:w-8 sm:h-8 text-primary-600" />
             </div>
-            <h1 className="text-3xl font-bold text-gray-900 mb-2">
+            <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2">
               Business Card Automation
             </h1>
-            <p className="text-gray-600">
+            <p className="text-sm sm:text-base text-gray-600 px-2">
               Scan, sync, and manage your business cards with AI
             </p>
           </div>
 
           {/* Features */}
-          <div className="space-y-3 mb-8">
-            <div className="flex items-center space-x-3 text-sm text-gray-700">
-              <FiCheckCircle className="w-5 h-5 text-green-500 flex-shrink-0" />
+          <div className="space-y-2.5 sm:space-y-3 mb-6 sm:mb-8">
+            <div className="flex items-center space-x-3 text-xs sm:text-sm text-gray-700">
+              <FiCheckCircle className="w-4 h-4 sm:w-5 sm:h-5 text-green-500 flex-shrink-0" />
               <span>AI-powered card scanning with Gemini Vision</span>
             </div>
-            <div className="flex items-center space-x-3 text-sm text-gray-700">
-              <FiCheckCircle className="w-5 h-5 text-green-500 flex-shrink-0" />
+            <div className="flex items-center space-x-3 text-xs sm:text-sm text-gray-700">
+              <FiCheckCircle className="w-4 h-4 sm:w-5 sm:h-5 text-green-500 flex-shrink-0" />
               <span>Automatic sync to Google Contacts</span>
             </div>
-            <div className="flex items-center space-x-3 text-sm text-gray-700">
-              <FiCheckCircle className="w-5 h-5 text-green-500 flex-shrink-0" />
+            <div className="flex items-center space-x-3 text-xs sm:text-sm text-gray-700">
+              <FiCheckCircle className="w-4 h-4 sm:w-5 sm:h-5 text-green-500 flex-shrink-0" />
               <span>Personalized email campaigns</span>
             </div>
           </div>
@@ -63,7 +63,7 @@ const Login = () => {
           {/* Google Login Button */}
           <button
             onClick={handleGoogleLogin}
-            className="w-full flex items-center justify-center space-x-3 px-6 py-3 bg-white border-2 border-gray-300 rounded-lg text-gray-700 font-medium hover:bg-gray-50 hover:border-gray-400 transition-all shadow-sm"
+            className="w-full flex items-center justify-center space-x-3 px-5 sm:px-6 py-3 bg-white border-2 border-gray-300 rounded-lg text-gray-700 font-medium hover:bg-gray-50 hover:border-gray-400 transition-all shadow-sm text-sm sm:text-base"
           >
             <svg className="w-5 h-5" viewBox="0 0 24 24">
               <path
@@ -87,19 +87,19 @@ const Login = () => {
           </button>
 
           {/* Divider */}
-          <div className="relative my-6">
+          <div className="relative my-5 sm:my-6">
             <div className="absolute inset-0 flex items-center">
               <div className="w-full border-t border-gray-300"></div>
             </div>
-            <div className="relative flex justify-center text-sm">
+            <div className="relative flex justify-center text-xs sm:text-sm">
               <span className="px-2 bg-white text-gray-500">Secure sign-in with Google OAuth</span>
             </div>
           </div>
 
           {/* Info */}
-          <div className="bg-primary-50 rounded-lg p-4 text-sm text-gray-700">
+          <div className="bg-primary-50 rounded-lg p-3 sm:p-4 text-xs sm:text-sm text-gray-700">
             <div className="flex items-start space-x-2">
-              <FiZap className="w-5 h-5 text-primary-600 flex-shrink-0 mt-0.5" />
+              <FiZap className="w-4 h-4 sm:w-5 sm:h-5 text-primary-600 flex-shrink-0 mt-0.5" />
               <p>
                 By continuing, you agree to share your Google account information
                 with this application for authentication and accessing Google Contacts
@@ -110,7 +110,7 @@ const Login = () => {
         </div>
 
         {/* Footer */}
-        <p className="text-center text-sm text-gray-600 mt-8">
+        <p className="text-center text-xs sm:text-sm text-gray-600 mt-6 sm:mt-8 px-4">
           Built with Node.js, React, and Google AI
         </p>
       </div>

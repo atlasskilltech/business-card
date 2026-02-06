@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { FiMail, FiPhone, FiBriefcase, FiMapPin, FiGlobe, FiTrash2, FiEdit2, FiCheckCircle } from 'react-icons/fi';
 import { toast } from 'react-toastify';
 import { cardsAPI } from '../utils/api';
+import { getImageUrl } from '../utils/imageUtils';
 
 const CardItem = ({ card, onUpdate, onDelete }) => {
   const [syncing, setSyncing] = useState(false);
@@ -41,9 +42,12 @@ const CardItem = ({ card, onUpdate, onDelete }) => {
         <div className="flex items-start space-x-3 sm:space-x-4 min-w-0 flex-1">
           {card.image_url && (
             <img
-              src={card.image_url}
+              src={getImageUrl(card.image_url)}
               alt="Business card"
               className="w-16 h-16 sm:w-20 sm:h-20 object-cover rounded-lg border border-gray-200 flex-shrink-0"
+              onError={(e) => {
+                e.target.style.display = 'none';
+              }}
             />
           )}
           <div className="min-w-0 flex-1">

@@ -74,19 +74,19 @@ const MyCards = () => {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 sm:space-y-6">
       {/* Header */}
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-0">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900">My Cards</h1>
-          <p className="text-gray-600 mt-1">
+          <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">My Cards</h1>
+          <p className="text-sm sm:text-base text-gray-600 mt-1">
             {cards.length} card{cards.length !== 1 ? 's' : ''} saved
           </p>
         </div>
 
         <button
           onClick={fetchCards}
-          className="flex items-center space-x-2 px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors"
+          className="flex items-center justify-center space-x-2 px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors text-sm sm:text-base w-full sm:w-auto"
         >
           <FiRefreshCw className="w-4 h-4" />
           <span>Refresh</span>
@@ -94,15 +94,15 @@ const MyCards = () => {
       </div>
 
       {/* Search and Filters */}
-      <div className="flex items-center space-x-4">
+      <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4">
         <div className="flex-1 relative">
-          <FiSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+          <FiSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4 sm:w-5 sm:h-5" />
           <input
             type="text"
             placeholder="Search by name, email, or company..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+            className="w-full pl-9 sm:pl-10 pr-4 py-2 sm:py-2.5 text-sm sm:text-base border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
           />
         </div>
 
@@ -110,7 +110,7 @@ const MyCards = () => {
           <button
             onClick={handleBatchSync}
             disabled={syncing}
-            className="flex items-center space-x-2 px-6 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors disabled:opacity-50"
+            className="flex items-center justify-center space-x-2 px-4 sm:px-6 py-2 sm:py-2.5 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors disabled:opacity-50 text-sm sm:text-base whitespace-nowrap"
           >
             <span>
               {syncing ? 'Syncing...' : `Sync ${selectedCards.length} Selected`}
@@ -121,7 +121,7 @@ const MyCards = () => {
 
       {/* Selection Mode Toggle */}
       {cards.length > 0 && (
-        <div className="flex items-center space-x-4">
+        <div className="flex items-center justify-between sm:justify-start gap-3 sm:gap-4">
           <button
             onClick={() => {
               if (selectedCards.length === filteredCards.length) {
@@ -130,12 +130,12 @@ const MyCards = () => {
                 setSelectedCards(filteredCards.map(card => card.id));
               }
             }}
-            className="text-sm text-primary-600 hover:text-primary-700 font-medium"
+            className="text-xs sm:text-sm text-primary-600 hover:text-primary-700 font-medium"
           >
             {selectedCards.length === filteredCards.length ? 'Deselect All' : 'Select All'}
           </button>
           {selectedCards.length > 0 && (
-            <span className="text-sm text-gray-600">
+            <span className="text-xs sm:text-sm text-gray-600">
               {selectedCards.length} selected
             </span>
           )}
@@ -144,16 +144,16 @@ const MyCards = () => {
 
       {/* Cards Grid */}
       {filteredCards.length > 0 ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
           {filteredCards.map((card) => (
             <div key={card.id} className="relative">
               {/* Selection Checkbox */}
-              <div className="absolute top-4 left-4 z-10">
+              <div className="absolute top-3 sm:top-4 left-3 sm:left-4 z-10">
                 <input
                   type="checkbox"
                   checked={selectedCards.includes(card.id)}
                   onChange={() => toggleCardSelection(card.id)}
-                  className="w-5 h-5 text-primary-600 border-gray-300 rounded focus:ring-primary-500"
+                  className="w-4 h-4 sm:w-5 sm:h-5 text-primary-600 border-gray-300 rounded focus:ring-primary-500"
                 />
               </div>
 
@@ -166,12 +166,12 @@ const MyCards = () => {
           ))}
         </div>
       ) : (
-        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-12 text-center">
-          <FiFilter className="w-16 h-16 text-gray-400 mx-auto mb-4" />
-          <h3 className="text-lg font-medium text-gray-900 mb-2">
+        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-8 sm:p-12 text-center">
+          <FiFilter className="w-12 h-12 sm:w-16 sm:h-16 text-gray-400 mx-auto mb-3 sm:mb-4" />
+          <h3 className="text-base sm:text-lg font-medium text-gray-900 mb-2">
             {searchTerm ? 'No cards found' : 'No cards yet'}
           </h3>
-          <p className="text-gray-600 mb-6">
+          <p className="text-sm sm:text-base text-gray-600 mb-4 sm:mb-6">
             {searchTerm
               ? 'Try adjusting your search terms'
               : 'Start by scanning your first business card'}
@@ -179,7 +179,7 @@ const MyCards = () => {
           {!searchTerm && (
             <a
               href="/scan"
-              className="inline-flex items-center space-x-2 px-6 py-3 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors"
+              className="inline-flex items-center space-x-2 px-4 sm:px-6 py-2 sm:py-3 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors text-sm sm:text-base"
             >
               <span>Scan First Card</span>
             </a>

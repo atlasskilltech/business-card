@@ -14,6 +14,48 @@ const CardScanner = () => {
   const [error, setError] = useState(null);
   const cameraInputRef = useRef(null);
 
+  const compressImage = (file) => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      const img = new Image();
+
+      reader.onload = (e) => {
+        img.src = e.target.result;
+      };
+
+      reader.onerror = reject;
+      reader.readAsDataURL(file);
+
+      img.onload = () => {
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
+
+        const maxWidth = 900; // 👈 adjust resolution here
+        const scale = maxWidth / img.width;
+
+        canvas.width = maxWidth;
+        canvas.height = img.height * scale;
+
+        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+
+        canvas.toBlob(
+          (blob) => {
+            const compressedFile = new File(
+              [blob],
+              file.name.replace(/\.\w+$/, '.jpg'),
+              { type: 'image/jpeg' }
+            );
+            resolve(compressedFile);
+          },
+          'image/jpeg',
+          0.65 // 👈 adjust quality (0.1–1)
+        );
+      };
+
+      img.onerror = reject;
+    });
+  }; 
+
   const processImage = async (file) => {
     console.log('Processing image:', file.name, file.type, file.size);
     
@@ -38,9 +80,15 @@ const CardScanner = () => {
     setScanning(true);
 
     try {
-      console.log('Creating FormData...');
+      // 🔥 COMPRESS BEFORE UPLOAD
+      const compressedFile = await compressImage(file);
+
+      console.log('Compressed file size:', compressedFile.size);
+
+      setPreview(URL.createObjectURL(compressedFile));
+
       const formData = new FormData();
-      formData.append('card', file);
+      formData.append('card', compressedFile);
 
       console.log('Sending to API...');
       const response = await cardsAPI.scanCard(formData);

@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { FiCamera, FiCreditCard, FiMail, FiCheckCircle, FiTrendingUp } from 'react-icons/fi';
 import { cardsAPI, emailAPI } from '../utils/api';
 import Loading from '../components/Loading';
+import { getImageUrl } from '../utils/imageUtils';
 
 const Dashboard = () => {
   const [stats, setStats] = useState(null);
@@ -155,9 +156,12 @@ const Dashboard = () => {
                   <div className="flex items-center space-x-3 sm:space-x-4 min-w-0 flex-1">
                     {card.image_url && (
                       <img
-                        src={card.image_url}
+                        src={getImageUrl(card.image_url)}
                         alt="Card"
                         className="w-10 h-10 sm:w-12 sm:h-12 rounded-lg object-cover border border-gray-200 flex-shrink-0"
+                        onError={(e) => {
+                          e.target.style.display = 'none';
+                        }}
                       />
                     )}
                     <div className="min-w-0 flex-1">

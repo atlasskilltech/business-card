@@ -301,7 +301,7 @@ const CardScanner = () => {
                   <span className="text-base lg:text-lg font-medium">Take Photo with Camera</span>
                 </label>
                 <p className="text-xs lg:text-sm text-gray-500 mt-3">
-                  ðŸ“± On mobile: Opens your camera directly
+                  On mobile: Opens your camera directly
                 </p>
               </div>
             </div>

@@ -4,6 +4,7 @@ import { FiUpload, FiCamera, FiCheck, FiEdit2, FiAlertCircle } from 'react-icons
 import { toast } from 'react-toastify';
 import { cardsAPI } from '../utils/api';
 import CardEditor from '../components/CardEditor';
+import { getImageUrl } from '../utils/imageUtils';
 import Loading from '../components/Loading';
 
 const CardScanner = () => {
@@ -14,7 +15,7 @@ const CardScanner = () => {
   const [error, setError] = useState(null);
   const cameraInputRef = useRef(null);
 
-  const compressImage = (file) => {
+   const compressImage = (file) => {
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
       const img = new Image();
@@ -30,7 +31,7 @@ const CardScanner = () => {
         const canvas = document.createElement('canvas');
         const ctx = canvas.getContext('2d');
 
-        const maxWidth = 900; // 👈 adjust resolution here
+        const maxWidth = 900; // ðŸ‘ˆ adjust resolution here
         const scale = maxWidth / img.width;
 
         canvas.width = maxWidth;
@@ -48,7 +49,7 @@ const CardScanner = () => {
             resolve(compressedFile);
           },
           'image/jpeg',
-          0.65 // 👈 adjust quality (0.1–1)
+          0.65 // ðŸ‘ˆ adjust quality (0.1â€“1)
         );
       };
 
@@ -56,6 +57,7 @@ const CardScanner = () => {
     });
   }; 
 
+  
   const processImage = async (file) => {
     console.log('Processing image:', file.name, file.type, file.size);
     
@@ -80,7 +82,9 @@ const CardScanner = () => {
     setScanning(true);
 
     try {
-      // 🔥 COMPRESS BEFORE UPLOAD
+
+      
+     // ðŸ”¥ COMPRESS BEFORE UPLOAD
       const compressedFile = await compressImage(file);
 
       console.log('Compressed file size:', compressedFile.size);
@@ -297,7 +301,7 @@ const CardScanner = () => {
                   <span className="text-base lg:text-lg font-medium">Take Photo with Camera</span>
                 </label>
                 <p className="text-xs lg:text-sm text-gray-500 mt-3">
-                  📱 On mobile: Opens your camera directly
+                  ðŸ“± On mobile: Opens your camera directly
                 </p>
               </div>
             </div>
@@ -306,7 +310,7 @@ const CardScanner = () => {
           {/* Features */}
           <div className="bg-primary-50 rounded-lg p-4 lg:p-6">
             <h3 className="font-semibold text-gray-900 mb-3 lg:mb-4 text-sm lg:text-base">
-              ✨ What we extract:
+              âœ¨ What we extract:
             </h3>
             <div className="grid grid-cols-2 gap-2 lg:gap-3">
               {['Name', 'Email', 'Phone', 'Company', 'Job Title', 'Website', 'Address'].map((field) => (
@@ -321,14 +325,14 @@ const CardScanner = () => {
           {/* Tips for Mobile Users */}
           <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
             <h4 className="font-semibold text-blue-900 mb-2 text-sm lg:text-base">
-              📸 Tips for Best Results:
+              ðŸ“¸ Tips for Best Results:
             </h4>
             <ul className="text-xs lg:text-sm text-blue-800 space-y-1">
-              <li>• Use good lighting (avoid shadows)</li>
-              <li>• Keep card flat and fully visible</li>
-              <li>• Ensure text is clear and not blurry</li>
-              <li>• Fill the frame with the card</li>
-              <li>• Avoid reflections if card is glossy</li>
+              <li>â€¢ Use good lighting (avoid shadows)</li>
+              <li>â€¢ Keep card flat and fully visible</li>
+              <li>â€¢ Ensure text is clear and not blurry</li>
+              <li>â€¢ Fill the frame with the card</li>
+              <li>â€¢ Avoid reflections if card is glossy</li>
             </ul>
           </div>
         </div>
@@ -354,7 +358,7 @@ const CardScanner = () => {
               {scannedCard.image_url && (
                 <div className="md:col-span-2">
                   <img
-                    src={scannedCard.image_url}
+                    src={getImageUrl(scannedCard.image_url)}
                     alt="Business card"
                     className="max-w-full lg:max-w-md mx-auto rounded-lg shadow-lg border border-gray-200"
                   />

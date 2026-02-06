@@ -40,16 +40,7 @@ const CardItem = ({ card, onUpdate, onDelete }) => {
     <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4 sm:p-6 hover:shadow-md transition-shadow">
       <div className="flex items-start justify-between mb-3 sm:mb-4 gap-3">
         <div className="flex items-start space-x-3 sm:space-x-4 min-w-0 flex-1">
-          {card.image_url && (
-            <img
-              src={getImageUrl(card.image_url)}
-              alt="Business card"
-              className="w-16 h-16 sm:w-20 sm:h-20 object-cover rounded-lg border border-gray-200 flex-shrink-0"
-              onError={(e) => {
-                e.target.style.display = 'none';
-              }}
-            />
-          )}
+          
           <div className="min-w-0 flex-1">
             <h3 className="text-base sm:text-lg font-semibold text-gray-900 truncate">
               {card.name || 'Unknown'}

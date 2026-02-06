@@ -92,47 +92,47 @@ const Dashboard = () => {
   ];
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-6 sm:space-y-8">
       {/* Header */}
       <div>
-        <h1 className="text-3xl font-bold text-gray-900">Dashboard</h1>
-        <p className="text-gray-600 mt-1">Welcome back! Here's your overview.</p>
+        <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">Dashboard</h1>
+        <p className="text-sm sm:text-base text-gray-600 mt-1">Welcome back! Here's your overview.</p>
       </div>
 
       {/* Stats Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 lg:gap-6">
         {statCards.map((stat) => (
           <Link
             key={stat.title}
             to={stat.link}
-            className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow"
+            className="bg-white rounded-lg shadow-sm border border-gray-200 p-4 sm:p-6 hover:shadow-md transition-shadow"
           >
-            <div className="flex items-center justify-between mb-4">
-              <div className={`${stat.color} w-12 h-12 rounded-lg flex items-center justify-center`}>
-                <stat.icon className="w-6 h-6 text-white" />
+            <div className="flex items-center justify-between mb-3 sm:mb-4">
+              <div className={`${stat.color} w-10 h-10 sm:w-12 sm:h-12 rounded-lg flex items-center justify-center`}>
+                <stat.icon className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
               </div>
             </div>
-            <p className="text-sm text-gray-600 mb-1">{stat.title}</p>
-            <p className="text-3xl font-bold text-gray-900">{stat.value}</p>
+            <p className="text-xs sm:text-sm text-gray-600 mb-1">{stat.title}</p>
+            <p className="text-2xl sm:text-3xl font-bold text-gray-900">{stat.value}</p>
           </Link>
         ))}
       </div>
 
       {/* Quick Actions */}
       <div>
-        <h2 className="text-xl font-semibold text-gray-900 mb-4">Quick Actions</h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <h2 className="text-lg sm:text-xl font-semibold text-gray-900 mb-3 sm:mb-4">Quick Actions</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 lg:gap-6">
           {quickActions.map((action) => (
             <Link
               key={action.title}
               to={action.link}
-              className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow group"
+              className="bg-white rounded-lg shadow-sm border border-gray-200 p-4 sm:p-6 hover:shadow-md transition-shadow group"
             >
-              <div className={`${action.color} w-12 h-12 rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 transition-transform`}>
-                <action.icon className="w-6 h-6 text-white" />
+              <div className={`${action.color} w-10 h-10 sm:w-12 sm:h-12 rounded-lg flex items-center justify-center mb-3 sm:mb-4 group-hover:scale-110 transition-transform`}>
+                <action.icon className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
               </div>
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">{action.title}</h3>
-              <p className="text-sm text-gray-600">{action.description}</p>
+              <h3 className="text-base sm:text-lg font-semibold text-gray-900 mb-1 sm:mb-2">{action.title}</h3>
+              <p className="text-xs sm:text-sm text-gray-600">{action.description}</p>
             </Link>
           ))}
         </div>
@@ -140,9 +140,9 @@ const Dashboard = () => {
 
       {/* Recent Cards */}
       <div>
-        <div className="flex items-center justify-between mb-4">
-          <h2 className="text-xl font-semibold text-gray-900">Recent Cards</h2>
-          <Link to="/cards" className="text-primary-600 hover:text-primary-700 text-sm font-medium">
+        <div className="flex items-center justify-between mb-3 sm:mb-4">
+          <h2 className="text-lg sm:text-xl font-semibold text-gray-900">Recent Cards</h2>
+          <Link to="/cards" className="text-primary-600 hover:text-primary-700 text-xs sm:text-sm font-medium">
             View all →
           </Link>
         </div>
@@ -150,19 +150,21 @@ const Dashboard = () => {
         {recentCards.length > 0 ? (
           <div className="bg-white rounded-lg shadow-sm border border-gray-200 divide-y">
             {recentCards.map((card) => (
-              <div key={card.id} className="p-4 hover:bg-gray-50 transition-colors">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center space-x-4">
+              <div key={card.id} className="p-3 sm:p-4 hover:bg-gray-50 transition-colors">
+                <div className="flex items-center justify-between gap-3">
+                  <div className="flex items-center space-x-3 sm:space-x-4 min-w-0 flex-1">
                     {card.image_url && (
                       <img
                         src={card.image_url}
                         alt="Card"
-                        className="w-12 h-12 rounded-lg object-cover border border-gray-200"
+                        className="w-10 h-10 sm:w-12 sm:h-12 rounded-lg object-cover border border-gray-200 flex-shrink-0"
                       />
                     )}
-                    <div>
-                      <h3 className="font-medium text-gray-900">{card.name || 'Unknown'}</h3>
-                      <p className="text-sm text-gray-600">
+                    <div className="min-w-0 flex-1">
+                      <h3 className="font-medium text-gray-900 text-sm sm:text-base truncate">
+                        {card.name || 'Unknown'}
+                      </h3>
+                      <p className="text-xs sm:text-sm text-gray-600 truncate">
                         {card.job_title && card.company
                           ? `${card.job_title} at ${card.company}`
                           : card.company || card.email}
@@ -170,9 +172,9 @@ const Dashboard = () => {
                     </div>
                   </div>
                   {card.synced_to_google && (
-                    <span className="flex items-center space-x-1 text-green-600 text-sm">
-                      <FiCheckCircle className="w-4 h-4" />
-                      <span>Synced</span>
+                    <span className="flex items-center space-x-1 text-green-600 text-xs sm:text-sm flex-shrink-0">
+                      <FiCheckCircle className="w-3 h-3 sm:w-4 sm:h-4" />
+                      <span className="hidden sm:inline">Synced</span>
                     </span>
                   )}
                 </div>
@@ -180,12 +182,12 @@ const Dashboard = () => {
             ))}
           </div>
         ) : (
-          <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-8 text-center">
-            <FiCreditCard className="w-12 h-12 text-gray-400 mx-auto mb-3" />
-            <p className="text-gray-600 mb-4">No cards scanned yet</p>
+          <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 sm:p-8 text-center">
+            <FiCreditCard className="w-10 h-10 sm:w-12 sm:h-12 text-gray-400 mx-auto mb-3" />
+            <p className="text-sm sm:text-base text-gray-600 mb-4">No cards scanned yet</p>
             <Link
               to="/scan"
-              className="inline-flex items-center space-x-2 px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors"
+              className="inline-flex items-center space-x-2 px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors text-sm sm:text-base"
             >
               <FiCamera />
               <span>Scan Your First Card</span>

@@ -355,15 +355,7 @@ const CardScanner = () => {
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-6">
               {/* Image */}
-              {scannedCard.image_url && (
-                <div className="md:col-span-2">
-                  <img
-                    src={getImageUrl(scannedCard.image_url)}
-                    alt="Business card"
-                    className="max-w-full lg:max-w-md mx-auto rounded-lg shadow-lg border border-gray-200"
-                  />
-                </div>
-              )}
+              
 
               {/* Fields */}
               <div>

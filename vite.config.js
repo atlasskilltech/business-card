@@ -7,11 +7,11 @@ export default defineConfig({
     port: 3000,
     proxy: {
       '/api': {
-        target: 'https://business-card-api.atlasskilltech.app/api',
+        target: 'https://business-card-api.atlasskilltech.app',
         changeOrigin: true
       },
       '/uploads': {
-        target: 'https://business-card-api.atlasskilltech.app/api',
+        target: 'https://business-card-api.atlasskilltech.app',
         changeOrigin: true
       }
     }
